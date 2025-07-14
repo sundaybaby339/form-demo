@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Phần 2 - Hồ sơ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+    }
+    #timer {
+      font-size: 18px;
+      color: red;
+      text-align: right;
+      font-weight: bold;
+    }
+    h3 {
+      margin-top: 30px;
+      color: #2a4d69;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Phần 2 - Hồ sơ</h2>
+  <div id="timer">Thời gian còn lại: 08:00</div>
+
+  <form id="multiForm">
+    <input type="hidden" id="email" name="email">
+
+    <!-- Bộ 1 -->
+    <div class="section active" id="section1">
+      <h3>Bộ hồ sơ 1: Bộ hồ sơ khai sinh</h3>
+      <label>1. Họ và tên của trẻ:</label><input type="text" name="1_hoten_tre">
+      <label>2. Ngày, tháng, năm sinh của trẻ:</label><input type="text" name="2_ngaysinh_tre">
+      <label>3. Giới tính của trẻ:</label><input type="text" name="3_gioitinh_tre">
+      <label>4. Dân tộc của trẻ:</label><input type="text" name="4_dantoc_tre">
+      <label>5. Nơi sinh:</label><input type="text" name="5_noisinh">
+      <label>6. Quê quán của trẻ:</label><input type="text" name="6_quequan">
+      <label>7. Họ và tên của cha:</label><input type="text" name="7_hotencha">
+      <label>8. Năm sinh của cha:</label><input type="text" name="8_namsinhcha">
+      <label>9. Họ và tên của mẹ:</label><input type="text" name="9_hotenme">
+      <label>10. Năm sinh của mẹ:</label><input type="text" name="10_namsinhme">
+      <label>11. Họ và tên người đi khai sinh:</label><input type="text" name="11_hotennguoikhaisinh">
+      <label>12. Quan hệ với người được khai sinh:</label><input type="text" name="12_quanhe">
+      <button type="button" onclick="nextSection()">Tiếp theo</button>
+    </div>
+
+    <!-- Bộ 2 -->
+    <div class="section" id="section2">
+      <h3>Bộ hồ sơ 2: Đăng ký thường trú (sổ hộ khẩu)</h3>
+      <label>1. Họ và tên người kê khai:</label><input type="text" name="13_hoten_kekhai">
+      <label>2. Số định danh cá nhân:</label><input type="text" name="14_dinhdanh">
+      <label>3. Ngày tháng năm sinh:</label><input type="text" name="15_ngaysinh">
+      <label>4. Giới tính:</label><input type="text" name="16_gioitinh">
+      <label>5. Số điện thoại:</label><input type="text" name="17_sdt">
+      <label>6. Email (nếu có):</label><input type="text" name="18_email">
+      <label>7. Họ và tên chủ hộ:</label><input type="text" name="19_chuho">
+      <label>8. Quan hệ với chủ hộ:</label><input type="text" name="20_quanhe_chuho">
+      <label>9. Số định danh cá nhân của chủ hộ:</label><input type="text" name="21_dinhdanh_chuho">
+      <label>10. Nội dung đề nghị:</label><input type="text" name="22_noidung">
+      <label>11. Ngày lập tờ khai:</label><input type="text" name="23_ngaylap">
+      <label>12. Ký và ghi rõ họ, chữ đệm, tên:</label><input type="text" name="24_kyten">
+      <label>13. Ý kiến của cơ quan đăng ký cư trú:</label><input type="text" name="25_ykien">
+      <label>14. Trường hợp tách hộ:</label><input type="text" name="26_tachho">
+      <button type="button" onclick="nextSection()">Tiếp theo</button>
+    </div>
+
+    <!-- Bộ 3 -->
+    <div class="section" id="section3">
+      <h3>Bộ hồ sơ 3: Hồ sơ chứng thực hợp đồng chuyển nhượng quyền sử dụng đất</h3>
+      <label>1. Họ và tên bên chuyển nhượng:</label><input type="text" name="27_benchuyen">
+      <label>2. Số CCCD/CMND/Hộ chiếu:</label><input type="text" name="28_cccd_chuyen">
+      <label>3. Địa chỉ:</label><input type="text" name="29_diachi_chuyen">
+      <label>4. Họ và tên bên nhận chuyển nhượng:</label><input type="text" name="30_bennhan">
+      <label>5. Số CCCD/CMND/Hộ chiếu:</label><input type="text" name="31_cccd_nhan">
+      <label>6. Địa chỉ:</label><input type="text" name="32_diachi_nhan">
+      <label>7. Thửa đất số:</label><input type="text" name="33_thuadat">
+      <label>8. Tờ bản đồ số:</label><input type="text" name="34_bando">
+      <label>9. Địa chỉ thửa đất:</label><input type="text" name="35_diachidat">
+      <label>10. Diện tích:</label><input type="text" name="36_dientich">
+      <label>11. Hình thức sử dụng:</label><input type="text" name="37_hinhthuc">
+      <label>12. Mục đích sử dụng:</label><input type="text" name="38_mucdich">
+      <label>13. Thời hạn sử dụng:</label><input type="text" name="39_thoihan">
+      <label>14. Nguồn gốc sử dụng:</label><input type="text" name="40_nguongoc">
+      <label>15. Giá chuyển nhượng:</label><input type="text" name="41_gia">
+      <label>16. Cam kết của các bên:</label><input type="text" name="42_camket">
+      <button type="submit">Gửi</button>
+    </div>
+  </form>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+    let current = 0;
+
+    function nextSection() {
+      if (current < sections.length - 1) {
+        sections[current].classList.remove('active');
+        current++;
+        sections[current].classList.add('active');
+      }
+    }
+
+    let timeLeft = 8 * 60;
+    const timerEl = document.getElementById("timer");
+
+    function updateTimer() {
+      const m = Math.floor(timeLeft / 60);
+      const s = timeLeft % 60;
+      timerEl.textContent = `Thời gian còn lại: ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        document.getElementById("multiForm").submit();
+      }
+      timeLeft--;
+    }
+    const timer = setInterval(updateTimer, 1000);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email') || '';
+    document.getElementById('email').value = email;
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyoQDL2oSro9nq984Ywd3Ks5RhBJOuNFSn8On7KyTqMKpOEhlfuABkH4yNW_j6Yp1GvJw/exec';
+    const form = document.getElementById('multiForm');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(() => {
+        alert("Nộp bài thành công!");
+        window.location.reload();
+      })
+      .catch(error => {
+        alert("Lỗi khi gửi dữ liệu!");
+        console.error('Error!', error.message);
+      });
+    });
+  </script>
+</body>
+</html>

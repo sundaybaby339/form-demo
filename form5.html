@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Phần 1 - Nhập thông tin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Phần 1: Nhập thông tin</h2>
+  <form id="infoForm">
+    <label for="name">Họ và tên:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <button type="submit">Gửi và chuyển sang phần 2</button>
+  </form>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzVtL_PlahsLLrCL31Jpxwu6QG41Ck0tu2dWIXIPTv-o_JYqxOv0NVkFbBD5Cgat7Yc/exec'; // ✅ Dán URL Web App nếu muốn lưu vào Google Sheet
+    const part2URL = 'file:///C:/Users/NMS/Documents/Nh%E1%BA%ADp%20li%E1%BB%87u%20UBND/D%E1%BB%AF%20li%E1%BB%87u%20test/form4.html'; // ✅ Thay bằng link thực tế tới part2.html
+
+    const form = document.getElementById('infoForm');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+
+      // Gửi dữ liệu về Apps Script (nếu cần)
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(() => {
+          // Chuyển sang part2.html và truyền email
+          window.location.href = `${part2URL}?email=${encodeURIComponent(email)}`;
+        })
+        .catch(error => {
+          alert('Đã xảy ra lỗi khi gửi. Vui lòng thử lại.');
+          console.error('Error!', error.message);
+        });
+    });
+  </script>
+</body>
+</html>
