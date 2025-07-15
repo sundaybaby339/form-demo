@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Phần 2 - Hồ sơ</title>
+  <title>Phần 2 - Nhập liệu hồ sơ</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -78,7 +78,7 @@
   </style>
 </head>
 <body>
-  <h2>Phần 2 - Hồ sơ</h2>
+  <h2>Phần 2 - Nhập liệu hồ sơ</h2>
   <div id="timer">Thời gian còn lại: 08:00</div>
 
   <form id="multiForm">
@@ -86,7 +86,7 @@
 
     <!-- Bộ 1 -->
     <div class="section active" id="section1">
-      <h3>Bộ hồ sơ 1: Bộ hồ sơ khai sinh</h3>
+      <h3>Bộ hồ sơ 1: Bộ hồ sơ khai sinh. Từ Tờ khai đăng ký khai sinh hãy nhập chính xác 12 trường sau:</h3>
       <label>1. Họ và tên trẻ:</label><input type="text" name="1_hoten_tre">
       <label>2. Ngày, tháng, năm sinh của trẻ (dd/mm/yyyy):</label><input type="text" name="2_ngaysinh_tre">
       <label>3. Giới tính của trẻ:</label><input type="text" name="3_gioitinh_tre">
@@ -106,7 +106,7 @@
 
     <!-- Bộ 2 -->
     <div class="section" id="section2">
-      <h3>Bộ hồ sơ 2: Đăng ký thường trú (sổ hộ khẩu)</h3>
+      <h3>Bộ hồ sơ 2: Đăng ký thường trú (sổ hộ khẩu). Từ tờ khai thay đổi thông tin cư trú hãy nhập chính xác 14 trường sau:</h3>
       <label>1. Họ và tên người kê khai:</label><input type="text" name="13_hoten_kekhai">
       <label>2. Số định danh cá nhân của người kê khai:</label><input type="text" name="14_dinhdanh">
       <label>3. Ngày tháng năm sinh người kê khai (dd/mm/yyyy):</label><input type="text" name="15_ngaysinh">
@@ -129,7 +129,7 @@
 
     <!-- Bộ 3 -->
     <div class="section" id="section3">
-      <h3>Bộ hồ sơ 3: Hồ sơ chứng thực hợp đồng chuyển nhượng quyền sử dụng đất</h3>
+      <h3>Bộ hồ sơ 3: Hồ sơ chứng thực hợp đồng chuyển nhượng quyền sử dụng đất. Từ Dự thảo hợp đồng chuyển nhượng quyền sử dụng đất hãy nhập chính xác 16 trường sau:</h3>
       <label>1. Tên hợp đồng (ghi đầy đủ thông tin):</label><input type="text" name="27_tenhopdong">
       <label>2. Họ và tên bên chuyển nhượng (Bên A):</label><input type="text" name="28_ben_a">
       <label>3. Số CMND/CCCD bên A:</label><input type="text" name="29_cccd_a">
@@ -154,8 +154,8 @@
   </form>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwUXv1hyAU2KvfhmW6ujZY3IPyKhqQQfzHatO_6-SP5TDQyGeyCOPTvq5WH2DQSz9BR/exec';
-    const part3URL = 'https://sundaybaby339.github.io/form-demo/part3.html'; // ✅ Thay bằng link thực tế tới part3.html
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby8Grk_YtIJIdmHCtbnbZLHIBYTClpVAFrO45GofDqXq3fqhiVZ0hDma0ajjxfcNko/exec';
+    const part3URL = 'https://sundaybaby339.github.io/form-demo/form3.html'; // ✅ Thay bằng link thực tế tới part3.html
 
     const form = document.getElementById('multiForm');
     const sections = document.querySelectorAll('.section');
