@@ -24,6 +24,18 @@
     button:hover {
       background-color: #45a049;
     }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      input, button {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -34,17 +46,19 @@
 
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
+
     <label for="phone">Số điện thoại:</label>
-    <input type="tel" id="phone" name="phone" required>
+    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10,11}" title="Số điện thoại phải có 10-11 chữ số">
 
     <button type="submit">Gửi và chuyển sang phần 2</button>
   </form>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyS0dTOVFqBX6GAKTnEz0RIOOaRP8aw_qMqankC5CoK0TeDJBO1ObpMOHSXkEUICPQ-/exec'; // ✅ Dán URL Web App nếu muốn lưu vào Google Sheet
-    const part2URL = 'https://sundaybaby339.github.io/form-demo/form4.html'; // ✅ Thay bằng link thực tế tới part2.html
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwUXv1hyAU2KvfhmW6ujZY3IPyKhqQQfzHatO_6-SP5TDQyGeyCOPTvq5WH2DQSz9BR/exec';
+    const part2URL = 'https://sundaybaby339.github.io/form-demo/form4.html';
 
     const form = document.getElementById('infoForm');
+    const button = form.querySelector('button');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -53,20 +67,45 @@
       const email = form.email.value.trim();
       const phone = form.phone.value.trim();
 
-      // Gửi dữ liệu về Apps Script (nếu cần)
+      // Kiểm tra định dạng dữ liệu
+      const nameRegex = /^[a-zA-Z\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸý]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^[0-9]{10,11}$/;
+
+      if (!nameRegex.test(name)) {
+        alert("Họ và tên chỉ được chứa chữ cái và khoảng trắng!");
+        return;
+      }
+      if (!emailRegex.test(email)) {
+        alert("Vui lòng nhập email hợp lệ!");
+        return;
+      }
+      if (!phoneRegex.test(phone)) {
+        alert("Số điện thoại phải có 10-11 chữ số!");
+        return;
+      }
+
+      // Trạng thái loading
+      button.disabled = true;
+      button.textContent = 'Đang gửi...';
+
       const formData = new FormData();
       formData.append('name', name);
       formData.append('email', email);
       formData.append('phone', phone);
 
       fetch(scriptURL, { method: 'POST', body: formData })
-        .then(() => {
-          // Chuyển sang part2.html và truyền email
+        .then(response => {
+          if (!response.ok) throw new Error(`Lỗi server: ${response.status}`);
           window.location.href = `${part2URL}?email=${encodeURIComponent(email)}`;
         })
         .catch(error => {
-          alert('Đã xảy ra lỗi khi gửi. Vui lòng thử lại.');
-          console.error('Error!', error.message);
+          alert(`Đã xảy ra lỗi: ${error.message}. Vui lòng thử lại hoặc liên hệ quản trị viên.`);
+          console.error('Error!', error);
+        })
+        .finally(() => {
+          button.disabled = false;
+          button.textContent = 'Gửi và chuyển sang phần 2';
         });
     });
   </script>
