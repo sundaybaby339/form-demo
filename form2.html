@@ -154,7 +154,7 @@
   </form>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycby8Grk_YtIJIdmHCtbnbZLHIBYTClpVAFrO45GofDqXq3fqhiVZ0hDma0ajjxfcNko/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz4vG26OC_2EMk_vxSAJcAbKYmAVl_fCCkplYNYe4YlgIaShiS8B6MtAcZrV9YMTJZr/exec';
     const part3URL = 'https://sundaybaby339.github.io/form-demo/form3.html';
 
     const form = document.getElementById('multiForm');
@@ -177,20 +177,15 @@
       }
     }
 
-    // Đếm ngược riêng cho phần 2 (10 phút)
-    let timeLeft = 10 * 60;
+    // Reset timer khi vào Phần 2
+    let timeLeft = 10 * 60; // Bắt đầu từ 10 phút (600 giây)
     const timerEl = document.getElementById("timer");
-    let startTime = localStorage.getItem('startTimePart2');
-    if (!startTime) {
-      startTime = Date.now();
-      localStorage.setItem('startTimePart2', startTime);
-    } else {
-      startTime = Number(startTime);
-    }
-    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-    timeLeft = Math.max(0, timeLeft - elapsed);
+    let startTime = Date.now(); // Khởi tạo lại startTime khi vào trang
+    localStorage.setItem('startTimePart2', startTime); // Lưu startTime mới
 
     function updateTimer() {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      timeLeft = Math.max(0, 10 * 60 - elapsed); // Cập nhật timeLeft dựa trên elapsed
       if (timeLeft <= 0) {
         timerEl.textContent = `Thời gian còn lại: 00:00`;
         clearInterval(timer);
@@ -200,9 +195,9 @@
       const m = Math.floor(timeLeft / 60);
       const s = timeLeft % 60;
       timerEl.textContent = `Thời gian còn lại: ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-      timeLeft--;
     }
     const timer = setInterval(updateTimer, 1000);
+    updateTimer(); // Cập nhật ngay lập tức
 
     const urlParams = new URLSearchParams(window.location.search);
     const email = urlParams.get('email') || '';
@@ -223,13 +218,19 @@
         method: 'POST',
         body: formData
       })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.text();
+      })
       .then(() => {
         alert(isTimeout ? "Hết thời gian! Dữ liệu đã được gửi." : "Nộp bài thành công!");
         window.location.href = `${part3URL}?email=${encodeURIComponent(email)}`;
       })
       .catch(error => {
-        alert("Lỗi khi gửi dữ liệu!");
-        console.error('Error!', error.message);
+        alert(`Đã xảy ra lỗi khi gửi dữ liệu: ${error.message}. Vui lòng thử lại hoặc liên hệ quản trị viên.`);
+        console.error('Error!', error);
       })
       .finally(() => {
         if (button) {
