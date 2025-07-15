@@ -48,14 +48,14 @@
     <input type="email" id="email" name="email" required>
 
     <label for="phone">Số điện thoại:</label>
-    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10,11}" title="Số điện thoại phải có 10-11 chữ số">
+    <input type="tel" id="phone" name="phone" required>
 
     <button type="submit">Gửi và chuyển sang phần 2</button>
   </form>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwUXv1hyAU2KvfhmW6ujZY3IPyKhqQQfzHatO_6-SP5TDQyGeyCOPTvq5WH2DQSz9BR/exec';
-    const part2URL = 'https://sundaybaby339.github.io/form-demo/form4.html';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby8Grk_YtIJIdmHCtbnbZLHIBYTClpVAFrO45GofDqXq3fqhiVZ0hDma0ajjxfcNko/exec';
+    const part2URL = 'https://sundaybaby339.github.io/form-demo/form2.html';
 
     const form = document.getElementById('infoForm');
     const button = form.querySelector('button');
@@ -67,23 +67,7 @@
       const email = form.email.value.trim();
       const phone = form.phone.value.trim();
 
-      // Kiểm tra định dạng dữ liệu
-      const nameRegex = /^[a-zA-Z\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸý]+$/;
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phoneRegex = /^[0-9]{10,11}$/;
-
-      if (!nameRegex.test(name)) {
-        alert("Họ và tên chỉ được chứa chữ cái và khoảng trắng!");
-        return;
-      }
-      if (!emailRegex.test(email)) {
-        alert("Vui lòng nhập email hợp lệ!");
-        return;
-      }
-      if (!phoneRegex.test(phone)) {
-        alert("Số điện thoại phải có 10-11 chữ số!");
-        return;
-      }
+      // Loại bỏ kiểm tra định dạng (nameRegex, emailRegex, phoneRegex)
 
       // Trạng thái loading
       button.disabled = true;
