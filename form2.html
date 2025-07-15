@@ -79,7 +79,7 @@
 </head>
 <body>
   <h2>Phần 2 - Nhập liệu hồ sơ</h2>
-  <div id="timer">Thời gian còn lại: 08:00</div>
+  <div id="timer">Thời gian còn lại: 10:00</div>
 
   <form id="multiForm">
     <input type="hidden" id="email" name="email">
@@ -177,7 +177,7 @@
       }
     }
 
-    let timeLeft = 8 * 60;
+    let timeLeft = 10 * 60; // Thay đổi thành 10 phút
     const timerEl = document.getElementById("timer");
     const startTime = localStorage.getItem('startTimePart2') || Date.now();
     localStorage.setItem('startTimePart2', startTime);
