@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Phần 3 - Kiểm tra nhập liệu</title>
   <style>
+    /* Giữ nguyên CSS hiện tại */
     body {
       font-family: Arial, sans-serif;
       max-width: 900px;
@@ -76,25 +77,11 @@
       cursor: not-allowed;
     }
     @media (max-width: 600px) {
-      body {
-        padding: 10px;
-        max-width: 100%;
-      }
-      th, td {
-        font-size: 12px;
-        padding: 6px;
-      }
-      .value-input {
-        min-width: 150px;
-      }
-      #timer {
-        font-size: 14px;
-        padding: 6px 8px;
-      }
-      button {
-        font-size: 14px;
-        padding: 8px 15px;
-      }
+      body { padding: 10px; max-width: 100%; }
+      th, td { font-size: 12px; padding: 6px; }
+      .value-input { min-width: 150px; }
+      #timer { font-size: 14px; padding: 6px 8px; }
+      button { font-size: 14px; padding: 8px 15px; }
     }
   </style>
 </head>
@@ -105,7 +92,7 @@
   <form id="checkForm">
     <input type="hidden" id="email" name="email">
 
-     <!-- Bộ hồ sơ 4: Cấp bản sao trích lục hộ tịch -->
+    <!-- Bộ hồ sơ 4: Cấp bản sao trích lục hộ tịch -->
     <h3>Bộ hồ sơ 4: Cấp bản sao trích lục hộ tịch. Từ tờ khai yêu cầu cấp bản sao trích lục hộ tịch, hãy kiểm tra các thông tin đã nhập, tick vào ô có giá trị sai và nhập lại giá trị đúng vào bảng sau:</h3>
     <table>
       <tr>
@@ -336,6 +323,7 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const email = urlParams.get('email') || '';
+    console.log("Email from URL:", email); // Debug: Kiểm tra giá trị email
     document.getElementById('email').value = email;
 
     const TIME_LIMIT = 5 * 60; // 5 phút
@@ -377,6 +365,7 @@
       button.textContent = 'Đang gửi...';
 
       const formData = new FormData(form);
+      console.log("FormData entries:", [...formData.entries()]); // Debug: Kiểm tra dữ liệu gửi đi
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(response => {
           if (!response.ok) {
