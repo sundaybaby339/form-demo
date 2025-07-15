@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Phần 3 - Kiểm tra nhập liệu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background-color: #fff;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
+      background-color: #000; /* Nền đen */
+      color: #fff; /* Chữ trắng */
+      font-weight: bold;
+    }
+    td {
+      font-size: 14px;
+    }
+    input[type="text"], input[type="checkbox"] {
+      width: 100%;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+    }
+    .value-input {
+      display: none;
+      min-width: 250px;
+    }
+    .value-input.active {
+      display: inline-block;
+    }
+    #timer {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      background-color: white;
+      padding: 10px 15px;
+      border: 2px solid red;
+      border-radius: 6px;
+      font-size: 18px;
+      color: red;
+      font-weight: bold;
+      z-index: 9999;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+        max-width: 100%;
+      }
+      th, td {
+        font-size: 12px;
+        padding: 6px;
+      }
+      .value-input {
+        min-width: 150px;
+      }
+      #timer {
+        font-size: 14px;
+        padding: 6px 8px;
+      }
+      button {
+        font-size: 14px;
+        padding: 8px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Phần 3 - Kiểm tra nhập liệu</h2>
+  <div id="timer">Thời gian còn lại: 07:00</div>
+
+  <form id="checkForm">
+    <input type="hidden" id="email" name="email">
+
+    <!-- Bộ hồ sơ 4: Cấp bản sao trích lục hộ tịch -->
+    <h3>Bộ hồ sơ 4: Cấp bản sao trích lục hộ tịch</h3>
+    <table>
+      <tr>
+        <th>STT</th>
+        <th>Tên trường</th>
+        <th>Giá trị</th>
+        <th>Trường bị nhập sai giá trị</th>
+        <th>Giá trị đúng</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Họ và tên người yêu cầu</td>
+        <td>Lê Thị Huyềnh</td>
+        <td><input type="checkbox" name="error_1" onchange="toggleInput(this, 'value_1')"></td>
+        <td><input type="text" name="value_1" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Ngày tháng năm sinh người yêu cầu</td>
+        <td>15/03/1987</td>
+        <td><input type="checkbox" name="error_2" onchange="toggleInput(this, 'value_2')"></td>
+        <td><input type="text" name="value_2" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Nơi cư trú người yêu cầu</td>
+        <td>Số 21, ngõ 34 Phan Đình Phùng, phường Quán Thánh, Ba Đình, Hà Nội</td>
+        <td><input type="checkbox" name="error_3" onchange="toggleInput(this, 'value_3')"></td>
+        <td><input type="text" name="value_3" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Số giấy tờ tùy thân người yêu cầu</td>
+        <td>01356788</td>
+        <td><input type="checkbox" name="error_4" onchange="toggleInput(this, 'value_4')"></td>
+        <td><input type="text" name="value_4" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Ngày cấp giấy tờ tùy thân người yêu cầu</td>
+        <td>01/02/2006</td>
+        <td><input type="checkbox" name="error_5" onchange="toggleInput(this, 'value_5')"></td>
+        <td><input type="text" name="value_5" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Quan hệ với người được cấp bản sao Trích lục hộ tịch</td>
+        <td>Mẹ ruột</td>
+        <td><input type="checkbox" name="error_6" onchange="toggleInput(this, 'value_6')"></td>
+        <td><input type="text" name="value_6" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Đề nghị cơ quan cấp bản sao trích lục</td>
+        <td>khai sinh</td>
+        <td><input type="checkbox" name="error_7" onchange="toggleInput(this, 'value_7')"></td>
+        <td><input type="text" name="value_7" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Họ và tên người được cấp</td>
+        <td>Nguyễn Trọng Khánh</td>
+        <td><input type="checkbox" name="error_8" onchange="toggleInput(this, 'value_8')"></td>
+        <td><input type="text" name="value_8" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Ngày tháng năm sinh người được cấp</td>
+        <td>29/02/2020</td>
+        <td><input type="checkbox" name="error_9" onchange="toggleInput(this, 'value_9')"></td>
+        <td><input type="text" name="value_9" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Giới tính người được cấp</td>
+        <td>Nữ</td>
+        <td><input type="checkbox" name="error_10" onchange="toggleInput(this, 'value_10')"></td>
+        <td><input type="text" name="value_10" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>Dân tộc người được cấp</td>
+        <td>kinh</td>
+        <td><input type="checkbox" name="error_11" onchange="toggleInput(this, 'value_11')"></td>
+        <td><input type="text" name="value_11" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Quốc tịch người được cấp</td>
+        <td>Việt nam</td>
+        <td><input type="checkbox" name="error_12" onchange="toggleInput(this, 'value_12')"></td>
+        <td><input type="text" name="value_12" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>Số lượng bản sao yêu cầu</td>
+        <td>ba</td>
+        <td><input type="checkbox" name="error_13" onchange="toggleInput(this, 'value_13')"></td>
+        <td><input type="text" name="value_13" class="value-input" disabled></td>
+      </tr>
+    </table>
+
+    <!-- Bộ hồ sơ 5: Đăng ký thay đổi nội dung hộ tịch (cải chính hộ tịch) -->
+    <h3>Bộ hồ sơ 5: Đăng ký thay đổi nội dung hộ tịch (cải chính hộ tịch)</h3>
+    <table>
+      <tr>
+        <th>STT</th>
+        <th>Tên trường</th>
+        <th>Giá trị</th>
+        <th>Trường bị nhập sai giá trị</th>
+        <th>Giá trị đúng</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Họ và tên người yêu cầu</td>
+        <td>Lưu Thị Huyền</td>
+        <td><input type="checkbox" name="error_14" onchange="toggleInput(this, 'value_14')"></td>
+        <td><input type="text" name="value_14" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Ngày tháng năm sinh người yêu cầu</td>
+        <td>28/06/1990</td>
+        <td><input type="checkbox" name="error_15" onchange="toggleInput(this, 'value_15')"></td>
+        <td><input type="text" name="value_15" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Số giấy tờ tùy thân người yêu cầu</td>
+        <td>01190007699</td>
+        <td><input type="checkbox" name="error_16" onchange="toggleInput(this, 'value_16')"></td>
+        <td><input type="text" name="value_16" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Quan hệ với người được thay đổi</td>
+        <td>Mẹ ruột</td>
+        <td><input type="checkbox" name="error_17" onchange="toggleInput(this, 'value_17')"></td>
+        <td><input type="text" name="value_17" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Họ và tên người được thay đổi</td>
+        <td>Nguyễn Minh Tuấn</td>
+        <td><input type="checkbox" name="error_18" onchange="toggleInput(this, 'value_18')"></td>
+        <td><input type="text" name="value_18" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Ngày tháng năm sinh người được thay đổi</td>
+        <td>20/07/2020</td>
+        <td><input type="checkbox" name="error_19" onchange="toggleInput(this, 'value_19')"></td>
+        <td><input type="text" name="value_19" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Giới tính người được thay đổi</td>
+        <td>Nam</td>
+        <td><input type="checkbox" name="error_20" onchange="toggleInput(this, 'value_20')"></td>
+        <td><input type="text" name="value_20" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Dân tộc người được thay đổi</td>
+        <td>Kinh</td>
+        <td><input type="checkbox" name="error_21" onchange="toggleInput(this, 'value_21')"></td>
+        <td><input type="text" name="value_21" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Quốc tịch người được thay đổi</td>
+        <td>việt nam</td>
+        <td><input type="checkbox" name="error_22" onchange="toggleInput(this, 'value_22')"></td>
+        <td><input type="text" name="value_22" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Nơi cư trú người được thay đổi</td>
+        <td>Số 4, ngách 30, ngõ 82 Nguyễn Du, quận Hai Bà Trưng, TP. Hà Nội</td>
+        <td><input type="checkbox" name="error_23" onchange="toggleInput(this, 'value_23')"></td>
+        <td><input type="text" name="value_23" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>Nội dung thay đổi</td>
+        <td>Cải chính năm sinh từ "2020" thành "2019"</td>
+        <td><input type="checkbox" name="error_24" onchange="toggleInput(this, 'value_24')"></td>
+        <td><input type="text" name="value_24" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Lý do cải chính</td>
+        <td>Phát hiện giấy chứng sinh bản gốc ghi năm sinh là 2018, trong khi cán bộ hộ tịch đã nhập nhầm thành 2020</td>
+        <td><input type="checkbox" name="error_25" onchange="toggleInput(this, 'value_25')"></td>
+        <td><input type="text" name="value_25" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>Số lượng đề nghị cấp bản sao</td>
+        <td>02</td>
+        <td><input type="checkbox" name="error_26" onchange="toggleInput(this, 'value_26')"></td>
+        <td><input type="text" name="value_26" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td>Ngày lập tờ khai</td>
+        <td>22/07/2025</td>
+        <td><input type="checkbox" name="error_27" onchange="toggleInput(this, 'value_27')"></td>
+        <td><input type="text" name="value_27" class="value-input" disabled></td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td>UBND nơi đăng ký</td>
+        <td>UBND phường Nguyễn Du, TP. Hà Nội</td>
+        <td><input type="checkbox" name="error_28" onchange="toggleInput(this, 'value_28')"></td>
+        <td><input type="text" name="value_28" class="value-input" disabled></td>
+      </tr>
+    </table>
+
+    <button type="submit">Hoàn thành</button>
+  </form>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyS0dTOVFqBX6GAKTnEz0RIOOaRP8aw_qMqankC5CoK0TeDJBO1ObpMOHSXkEUICPQ-/exec';
+
+    const form = document.getElementById('checkForm');
+    const button = form.querySelector('button');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email') || '';
+    document.getElementById('email').value = email;
+
+    let timeLeft = 7 * 60; // Bắt đầu từ 7 phút (420 giây)
+    const timerEl = document.getElementById("timer");
+    let startTime = localStorage.getItem('startTimePart3');
+
+    // Nếu chưa có startTime, đặt mới và bắt đầu từ 07:00
+    if (!startTime) {
+      startTime = Date.now();
+      localStorage.setItem('startTimePart3', startTime);
+    } else {
+      // Tính lại timeLeft dựa trên thời gian đã trôi qua
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      timeLeft = Math.max(0, 7 * 60 - elapsed);
+    }
+
+    function updateTimer() {
+      const m = Math.floor(timeLeft / 60);
+      const s = timeLeft % 60;
+      timerEl.textContent = `Thời gian còn lại: ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        submitForm(true);
+      }
+      timeLeft--;
+    }
+    const timer = setInterval(updateTimer, 1000);
+    updateTimer(); // Cập nhật ngay lập tức
+
+    function toggleInput(checkbox, inputId) {
+      const input = document.querySelector(`input[name="${inputId}"]`);
+      input.disabled = !checkbox.checked;
+      input.classList.toggle('active', checkbox.checked);
+    }
+
+    function submitForm(isTimeout = false) {
+      button.disabled = true;
+      button.textContent = 'Đang gửi...';
+
+      const formData = new FormData(form);
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(() => {
+          localStorage.removeItem('startTimePart3');
+          if (isTimeout) {
+            alert("Hết thời gian! Dữ liệu đã được gửi.");
+          } else {
+            alert("Hoàn thành bài kiểm tra!");
+          }
+          window.location.href = 'https://sundaybaby339.github.io/form-demo/thankyou.html'; // Thay bằng trang cảm ơn thực tế
+        })
+        .catch(error => {
+          alert("Lỗi khi gửi dữ liệu!");
+          console.error('Error!', error.message);
+        })
+        .finally(() => {
+          button.disabled = false;
+          button.textContent = 'Hoàn thành';
+        });
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      submitForm();
+    });
+  </script>
+</body>
+</html>
