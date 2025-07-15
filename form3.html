@@ -100,7 +100,7 @@
 </head>
 <body>
   <h2>Phần 3 - Kiểm tra nhập liệu</h2>
-  <div id="timer">Thời gian còn lại: 07:00</div>
+  <div id="timer">Thời gian còn lại: 05:00</div>
 
   <form id="checkForm">
     <input type="hidden" id="email" name="email">
@@ -338,18 +338,18 @@
     const email = urlParams.get('email') || '';
     document.getElementById('email').value = email;
 
-    let timeLeft = 7 * 60; // Bắt đầu từ 7 phút (420 giây)
+    let timeLeft = 5 * 60; // Thay đổi thành 5 phút (300 giây)
     const timerEl = document.getElementById("timer");
     let startTime = localStorage.getItem('startTimePart3');
 
-    // Nếu chưa có startTime, đặt mới và bắt đầu từ 07:00
+    // Nếu chưa có startTime, đặt mới và bắt đầu từ 05:00
     if (!startTime) {
       startTime = Date.now();
       localStorage.setItem('startTimePart3', startTime);
     } else {
       // Tính lại timeLeft dựa trên thời gian đã trôi qua
       const elapsed = Math.floor((Date.now() - startTime) / 1000);
-      timeLeft = Math.max(0, 7 * 60 - elapsed);
+      timeLeft = Math.max(0, 5 * 60 - elapsed);
     }
 
     function updateTimer() {
