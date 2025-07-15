@@ -23,8 +23,8 @@
       vertical-align: middle;
     }
     th {
-      background-color: #000; /* Nền đen */
-      color: #fff; /* Chữ trắng */
+      background-color: #000;
+      color: #fff;
       font-weight: bold;
     }
     td {
@@ -105,7 +105,7 @@
   <form id="checkForm">
     <input type="hidden" id="email" name="email">
 
-    <!-- Bộ hồ sơ 4: Cấp bản sao trích lục hộ tịch -->
+     <!-- Bộ hồ sơ 4: Cấp bản sao trích lục hộ tịch -->
     <h3>Bộ hồ sơ 4: Cấp bản sao trích lục hộ tịch. Từ tờ khai yêu cầu cấp bản sao trích lục hộ tịch, hãy kiểm tra các thông tin đã nhập, tick vào ô có giá trị sai và nhập lại giá trị đúng vào bảng sau:</h3>
     <table>
       <tr>
@@ -324,67 +324,70 @@
         <td><input type="text" name="value_28" class="value-input" disabled></td>
       </tr>
     </table>
-
+    <!-- Nút submit -->
     <button type="submit">Hoàn thành</button>
   </form>
 
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycby8Grk_YtIJIdmHCtbnbZLHIBYTClpVAFrO45GofDqXq3fqhiVZ0hDma0ajjxfcNko/exec';
-
     const form = document.getElementById('checkForm');
     const button = form.querySelector('button');
+    const timerEl = document.getElementById("timer");
 
     const urlParams = new URLSearchParams(window.location.search);
     const email = urlParams.get('email') || '';
     document.getElementById('email').value = email;
 
-    let timeLeft = 5 * 60; // Thay đổi thành 5 phút (300 giây)
-    const timerEl = document.getElementById("timer");
+    const TIME_LIMIT = 5 * 60; // 5 phút
     let startTime = localStorage.getItem('startTimePart3');
-
-    // Nếu chưa có startTime, đặt mới và bắt đầu từ 05:00
     if (!startTime) {
       startTime = Date.now();
       localStorage.setItem('startTimePart3', startTime);
     } else {
-      // Tính lại timeLeft dựa trên thời gian đã trôi qua
-      const elapsed = Math.floor((Date.now() - startTime) / 1000);
-      timeLeft = Math.max(0, 5 * 60 - elapsed);
+      startTime = Number(startTime);
     }
+
+    let elapsed = Math.floor((Date.now() - startTime) / 1000);
+    let timeLeft = Math.max(0, TIME_LIMIT - elapsed);
 
     function updateTimer() {
-      const m = Math.floor(timeLeft / 60);
-      const s = timeLeft % 60;
-      timerEl.textContent = `Thời gian còn lại: ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
       if (timeLeft <= 0) {
-        clearInterval(timer);
+        timerEl.textContent = `Thời gian còn lại: 00:00`;
+        clearInterval(timerInterval);
         submitForm(true);
+        return;
       }
+      const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+      const s = (timeLeft % 60).toString().padStart(2, '0');
+      timerEl.textContent = `Thời gian còn lại: ${m}:${s}`;
       timeLeft--;
     }
-    const timer = setInterval(updateTimer, 1000);
-    updateTimer(); // Cập nhật ngay lập tức
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
 
-    function toggleInput(checkbox, inputId) {
-      const input = document.querySelector(`input[name="${inputId}"]`);
-      input.disabled = !checkbox.checked;
-      input.classList.toggle('active', checkbox.checked);
+    function toggleInput(checkbox, inputName) {
+      const input = document.querySelector(`input[name="${inputName}"]`);
+      if (checkbox.checked) {
+        input.disabled = false;
+        input.classList.add('active');
+      } else {
+        input.disabled = true;
+        input.classList.remove('active');
+      }
     }
 
     function submitForm(isTimeout = false) {
+      clearInterval(timerInterval);
+      localStorage.removeItem('startTimePart3');
+
       button.disabled = true;
       button.textContent = 'Đang gửi...';
 
       const formData = new FormData(form);
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
-          localStorage.removeItem('startTimePart3');
-          if (isTimeout) {
-            alert("Hết thời gian! Dữ liệu đã được gửi.");
-          } else {
-            alert("Hoàn thành bài kiểm tra!");
-          }
-          window.location.href = 'https://sundaybaby339.github.io/form-demo/thankyou.html'; // Thay bằng trang cảm ơn thực tế
+          alert(isTimeout ? "Hết thời gian! Dữ liệu đã được gửi." : "Hoàn thành bài kiểm tra!");
+          window.location.href = 'https://sundaybaby339.github.io/form-demo/thankyou.html';
         })
         .catch(error => {
           alert("Lỗi khi gửi dữ liệu!");
