@@ -339,18 +339,12 @@
     document.getElementById('email').value = email;
 
     const TIME_LIMIT = 5 * 60; // 5 phút
-    let startTime = localStorage.getItem('startTimePart3');
-    if (!startTime) {
-      startTime = Date.now();
-      localStorage.setItem('startTimePart3', startTime);
-    } else {
-      startTime = Number(startTime);
-    }
-
-    let elapsed = Math.floor((Date.now() - startTime) / 1000);
-    let timeLeft = Math.max(0, TIME_LIMIT - elapsed);
+    let startTime = Date.now(); // Reset startTime khi vào trang
+    localStorage.setItem('startTimePart3', startTime); // Lưu startTime mới
 
     function updateTimer() {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      let timeLeft = Math.max(0, TIME_LIMIT - elapsed); // Cập nhật timeLeft mỗi lần
       if (timeLeft <= 0) {
         timerEl.textContent = `Thời gian còn lại: 00:00`;
         clearInterval(timerInterval);
@@ -360,10 +354,9 @@
       const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
       const s = (timeLeft % 60).toString().padStart(2, '0');
       timerEl.textContent = `Thời gian còn lại: ${m}:${s}`;
-      timeLeft--;
     }
     const timerInterval = setInterval(updateTimer, 1000);
-    updateTimer();
+    updateTimer(); // Cập nhật ngay lập tức
 
     function toggleInput(checkbox, inputName) {
       const input = document.querySelector(`input[name="${inputName}"]`);
@@ -385,13 +378,19 @@
 
       const formData = new FormData(form);
       fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.text();
+        })
         .then(() => {
           alert(isTimeout ? "Hết thời gian! Dữ liệu đã được gửi." : "Hoàn thành bài kiểm tra!");
           window.location.href = 'https://sundaybaby339.github.io/form-demo/thankyou.html';
         })
         .catch(error => {
-          alert("Lỗi khi gửi dữ liệu!");
-          console.error('Error!', error.message);
+          alert(`Đã xảy ra lỗi khi gửi dữ liệu: ${error.message}. Vui lòng thử lại hoặc liên hệ quản trị viên.`);
+          console.error('Error!', error);
         })
         .finally(() => {
           button.disabled = false;
