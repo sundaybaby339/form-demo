@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Phần 2 - Nhập liệu hồ sơ</title>
+  <title>Phần 2 - Hồ sơ</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,28 +48,45 @@
       background-color: #4CAF50;
       color: white;
       border: none;
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
     }
     button:hover {
       background-color: #45a049;
     }
-    .nav-buttons {
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .button-group {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      input, textarea, button {
+        font-size: 14px;
+      }
+      #timer {
+        font-size: 16px;
+        padding: 6px 8px;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>Phần 2 - Nhập liệu hồ sơ</h2>
+  <h2>Phần 2 - Hồ sơ</h2>
   <div id="timer">Thời gian còn lại: 08:00</div>
 
   <form id="multiForm">
     <input type="hidden" id="email" name="email">
-    <input type="hidden" id="phone" name="phone">
 
     <!-- Bộ 1 -->
     <div class="section active" id="section1">
-      <h3>Bộ hồ sơ 1: Bộ hồ sơ khai sinh. Từ Tờ khai đăng ký khai sinh hãy nhập chính xác 12 trường sau:</h3>
+      <h3>Bộ hồ sơ 1: Bộ hồ sơ khai sinh</h3>
       <label>1. Họ và tên trẻ:</label><input type="text" name="1_hoten_tre">
       <label>2. Ngày, tháng, năm sinh của trẻ (dd/mm/yyyy):</label><input type="text" name="2_ngaysinh_tre">
       <label>3. Giới tính của trẻ:</label><input type="text" name="3_gioitinh_tre">
@@ -82,16 +99,14 @@
       <label>10. Năm sinh của mẹ:</label><input type="text" name="10_namsinhme">
       <label>11. Họ và tên người đi khai sinh:</label><input type="text" name="11_hotennguoikhaisinh">
       <label>12. Quan hệ với người được khai sinh:</label><input type="text" name="12_quanhe">
-
-      <div class="nav-buttons">
-        <span></span>
+      <div class="button-group">
         <button type="button" onclick="nextSection()">Tiếp theo</button>
       </div>
     </div>
 
     <!-- Bộ 2 -->
     <div class="section" id="section2">
-      <h3>Bộ hồ sơ 2: Đăng ký thường trú (sổ hộ khẩu). Từ tờ khai thay đổi thông tin cư trú hãy nhập chính xác 14 trường sau:</h3>
+      <h3>Bộ hồ sơ 2: Đăng ký thường trú (sổ hộ khẩu)</h3>
       <label>1. Họ và tên người kê khai:</label><input type="text" name="13_hoten_kekhai">
       <label>2. Số định danh cá nhân của người kê khai:</label><input type="text" name="14_dinhdanh">
       <label>3. Ngày tháng năm sinh người kê khai (dd/mm/yyyy):</label><input type="text" name="15_ngaysinh">
@@ -106,41 +121,43 @@
       <label>12. Họ tên người kê khai cuối biểu mẫu:</label><input type="text" name="24_kyten">
       <label>13. Có khai thành viên đi kèm không (Ghi Có hoặc Không):</label><input type="text" name="25_khaikem">
       <label>14. Cơ quan tiếp nhận:</label><input type="text" name="26_coquan">
-      <div class="nav-buttons">
-        <span></span>
+      <div class="button-group">
+        <button type="button" onclick="prevSection()">Quay lại</button>
         <button type="button" onclick="nextSection()">Tiếp theo</button>
       </div>
     </div>
-<!-- Bộ 3 -->
-<div class="section" id="section3">
-  <h3>Bộ hồ sơ 3: Hồ sơ chứng thực hợp đồng chuyển nhượng quyền sử dụng đất. Từ Dự thảo hợp đồng chuyển nhượng quyền sử dụng đất hãy nhập chính xác 16 trường sau:</h3>
-  <label>1. Tên hợp đồng (ghi đầy đủ thông tin):</label><input type="text" name="27_tenhopdong">
-  <label>2. Họ và tên bên chuyển nhượng (Bên A):</label><input type="text" name="28_ben_a">
-  <label>3. Số CMND/CCCD bên A:</label><input type="text" name="29_cccd_a">
-  <label>4. Địa chỉ thường trú bên A:</label><input type="text" name="30_diachi_a">
-  <label>5. Họ và tên bên nhận chuyển nhượng (Bên B):</label><input type="text" name="31_ben_b">
-  <label>6. Số CMND/CCCD bên B:</label><input type="text" name="32_cccd_b">
-  <label>7. Địa chỉ thường trú bên B:</label><input type="text" name="33_diachi_b">
-  <label>8. Địa chỉ thửa đất (số thửa, tờ bản đồ, xã/huyện/Tỉnh):</label><input type="text" name="34_diachidat">
-  <label>9. Diện tích chuyển nhượng (m²) (Chỉ cần nhập số):</label><input type="text" name="35_dientich">
-  <label>10. Tổng giá trị chuyển nhượng (VND) (Chỉ cần nhập số):</label><input type="text" name="36_giatri">
-  <label>11. Hình thức sử dụng:</label><input type="text" name="37_hinhthuc">
-  <label>12. Mục đích sử dụng:</label><input type="text" name="38_mucdich">
-  <label>13. Thời hạn sử dụng:</label><input type="text" name="39_thoihan">
-  <label>14. Ngày lập hợp đồng (dd/mm/yyyy):</label><input type="text" name="40_ngaylaphopdong">
-  <label>15. Ngày cấp Giấy chứng nhận quyền sử dụng đất (dd/mm/yyyy):</label><input type="text" name="41_ngaycap">
-  <label>16. Tài sản gắn liền với đất:</label><input type="text" name="42_taisan">
 
-  <div class="nav-buttons">
-    <button type="button" onclick="prevSection()">Quay lại</button>
-    <button type="submit">Gửi bài</button>
-  </div>
-</div>
-
-      
+    <!-- Bộ 3 -->
+    <div class="section" id="section3">
+      <h3>Bộ hồ sơ 3: Hồ sơ chứng thực hợp đồng chuyển nhượng quyền sử dụng đất</h3>
+      <label>1. Tên hợp đồng (ghi đầy đủ thông tin):</label><input type="text" name="27_tenhopdong">
+      <label>2. Họ và tên bên chuyển nhượng (Bên A):</label><input type="text" name="28_ben_a">
+      <label>3. Số CMND/CCCD bên A:</label><input type="text" name="29_cccd_a">
+      <label>4. Địa chỉ thường trú bên A:</label><input type="text" name="30_diachi_a">
+      <label>5. Họ và tên bên nhận chuyển nhượng (Bên B):</label><input type="text" name="31_ben_b">
+      <label>6. Số CMND/CCCD bên B:</label><input type="text" name="32_cccd_b">
+      <label>7. Địa chỉ thường trú bên B:</label><input type="text" name="33_diachi_b">
+      <label>8. Địa chỉ thửa đất (số thửa, tờ bản đồ, xã/huyện/Tỉnh):</label><input type="text" name="34_diachidat">
+      <label>9. Diện tích chuyển nhượng (m²) (Chỉ cần nhập số):</label><input type="text" name="35_dientich">
+      <label>10. Tổng giá trị chuyển nhượng (VND) (Chỉ cần nhập số):</label><input type="text" name="36_giatri">
+      <label>11. Hình thức sử dụng:</label><input type="text" name="37_hinhthuc">
+      <label>12. Mục đích sử dụng:</label><input type="text" name="38_mucdich">
+      <label>13. Thời hạn sử dụng:</label><input type="text" name="39_thoihan">
+      <label>14. Ngày lập hợp đồng (dd/mm/yyyy):</label><input type="text" name="40_ngaylaphopdong">
+      <label>15. Ngày cấp Giấy chứng nhận quyền sử dụng đất (dd/mm/yyyy):</label><input type="text" name="41_ngaycap">
+      <label>16. Tài sản gắn liền với đất:</label><input type="text" name="42_taisan">
+      <div class="button-group">
+        <button type="button" onclick="prevSection()">Quay lại</button>
+        <button type="submit">Gửi và chuyển sang Phần 3</button>
+      </div>
+    </div>
   </form>
 
   <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwUXv1hyAU2KvfhmW6ujZY3IPyKhqQQfzHatO_6-SP5TDQyGeyCOPTvq5WH2DQSz9BR/exec';
+    const part3URL = 'https://sundaybaby339.github.io/form-demo/part3.html'; // ✅ Thay bằng link thực tế tới part3.html
+
+    const form = document.getElementById('multiForm');
     const sections = document.querySelectorAll('.section');
     let current = 0;
 
@@ -162,6 +179,10 @@
 
     let timeLeft = 8 * 60;
     const timerEl = document.getElementById("timer");
+    const startTime = localStorage.getItem('startTimePart2') || Date.now();
+    localStorage.setItem('startTimePart2', startTime);
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    timeLeft = Math.max(0, timeLeft - elapsed);
 
     function updateTimer() {
       const m = Math.floor(timeLeft / 60);
@@ -169,38 +190,52 @@
       timerEl.textContent = `Thời gian còn lại: ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
       if (timeLeft <= 0) {
         clearInterval(timer);
-        form.submit(); // tự động nộp dù chưa hoàn tất
+        submitForm(true);
       }
       timeLeft--;
     }
-
     const timer = setInterval(updateTimer, 1000);
 
     const urlParams = new URLSearchParams(window.location.search);
     const email = urlParams.get('email') || '';
-    const phone = urlParams.get('phone') || '';
     document.getElementById('email').value = email;
-    document.getElementById('phone').value = phone;
 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwKmbngxwj-L_S5a3FjnWJMluojMmLeZy3DW3nq_zfhkQ4G-rAHAvmDCRrk6YB4remw/exec';
-    const form = document.getElementById('multiForm');
+    function submitForm(isTimeout = false) {
+      const button = form.querySelector('button[type="submit"]');
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Đang gửi...';
+      }
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
       const formData = new FormData(form);
       fetch(scriptURL, {
         method: 'POST',
         body: formData
       })
       .then(() => {
-        alert("Nộp bài thành công!");
-        // Chuyển sang phần 3
-        window.location.href = `form3.html?email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
+        localStorage.removeItem('startTimePart2');
+        if (isTimeout) {
+          alert("Hết thời gian! Dữ liệu đã được gửi.");
+        } else {
+          alert("Nộp bài thành công!");
+        }
+        window.location.href = `${part3URL}?email=${encodeURIComponent(email)}`;
       })
       .catch(error => {
         alert("Lỗi khi gửi dữ liệu!");
         console.error('Error!', error.message);
+      })
+      .finally(() => {
+        if (button) {
+          button.disabled = false;
+          button.textContent = 'Gửi và chuyển sang Phần 3';
+        }
       });
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      submitForm();
     });
   </script>
 </body>
